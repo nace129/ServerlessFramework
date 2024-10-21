@@ -1,0 +1,83 @@
+# service: chatbot-service
+
+# provider:
+#   name: aws
+#   runtime: nodejs18.x
+
+# functions:
+#   hello:
+#     handler: handler.hello
+#     events:
+#       - http:
+#           path: hello
+#           method: get
+
+# service: doge-meme-generator
+
+# provider:
+#   name: aws
+#   runtime: nodejs18.x
+#   region: us-east-1
+#   iamRoleStatements:
+#     - Effect: Allow
+#       Action:
+#         - s3:PutObject
+#       Resource:
+#         - arn:aws:s3:::doge-memes-bucket/*  # Update with your bucket name
+
+# functions:
+#   generateMeme:
+#     handler: handler.generateMeme
+#     events:
+#       - http:
+#           path: generate-doge
+#           method: get
+#           cors: true
+
+# resources:
+#   Resources:
+#     DogeImagesBucket:
+#       Type: AWS::S3::Bucket
+#       Properties:
+#         BucketName: doge-memes-bucket  # Make sure it's globally unique
+        
+
+# package:
+#   include:
+#     - doge_images/**  # This line includes the doge_images folder in the deployment package
+#     - node_modules/**  # Ensure that node_modules (including sharp) are packaged
+
+service: chatbot-service
+
+provider:
+  name: aws
+  runtime: nodejs18.x # You can choose the runtime you need
+  region: us-east-1 # Set your desired region
+
+functions:
+  processImage:
+    handler: handler.processImage
+    events:
+      - http:
+          path: doge-image
+          method: get
+    # getRoot:
+    #   handler: handler.getRoot
+    #   events:
+    #     - http:
+    #         path: /
+    #         method: get
+    environment:
+      BUCKET_NAME: doge-memes-bucket
+
+plugins:
+  - serverless-offline # If you want to test locally
+
+custom:
+  serverless-offline:
+    port: 3000
+
+package:
+  include:
+    - doge_images/**
+    - node_modules/**

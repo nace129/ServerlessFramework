@@ -1,0 +1,22 @@
+{
+  "name": "chatbot-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless": "^4.4.6",
+    "serverless-offline": "^14.3.3"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1691.0",
+    "axios": "^1.7.7",
+    "gm": "^1.25.0",
+    "sharp": "^0.33.5"
+  },
+  "description": ""
+}
